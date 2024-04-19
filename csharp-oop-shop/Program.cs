@@ -1,45 +1,70 @@
 ﻿using csharp_oop_shop;
+using System;
+using System.Xml.Linq;
 
 namespace csharp_oop_shop
 {
 
     public class Prodotto
     {
-        public int codice;
+        public int codice
+        {
+         private   get ; set;
+        }
         public string nome { get; set; }
         public string description { get; set; }
         public double prezzo { get; set; }
-        public int iva { get; set; }
+        public double iva { get; set; }
 
 
-        Prodotto(string name, string description, double prezzo, int iva)
+        public Prodotto(string nome, string description, double prezzo, double iva)
         {
-            codice = rnd.Next(10,100);
-
-            Name = nome;
-            Description = description;
-            Prezzo = prezzo;
-            Iva = iva;
+            codice = RandomCodice();
+            this.nome = nome;
+            this.description = description;
+            this.prezzo = prezzo;
+            this.iva = iva;
         }
 
+        public int RandomCodice()
+        {
+            Random rnd = new Random();
+            return rnd.Next(10, 100);
+        }
+        public double GetPrezzo()
+        {
+            return prezzo;
+        }
+        
 
+        public double PrezzoPIuIva()
+        {
+            return prezzo * (1 + (double)iva / 100);
+        }
     }
 
     internal class Program
     {
         static void Main(string[] args)
         {
-            //cosi aseggno i valori 
-            Prodotto Prodottodettagliato = new Prodotto("nome prodotto " , "descrizione del prodotto " , 10.50 , 22);
-        //1 creare la classe Prodotto che gestisce i prodotti dello shop /
-        //2 Usate opportunamente i livelli di accesso (public, private /
-        //3 lla creazione di un nuovo prodotto il codice sia valorizzato con un numero random
-        //4 Il codice prodotto sia accessibile solo in lettura /
-        //5 Gli altri attributi siano accessibili sia in lettura che in scrittura /
-        //6 Il prodotto esponga sia un metodo per avere il prezzo base che uno per avere il prezzo comprensivo di iva
-        //7 Il prodotto esponga un metodo per avere il nome esteso, ottenuto concatenando codice + nome
-        //8 Testate poi i vostri oggetti Prodotto, istanziandoli e provando ad interargirci per testare tutti i metodi che avete previsto.
+
+
+            Prodotto Prodottodettagliato = new Prodotto(" lampada", " luminosa come la luce", 10, 22);
+            int NumeroCasuale = Prodottodettagliato.RandomCodice();
+ 
+
+            //stampo il numero casuale
+            Console.WriteLine($"il numero casuale generato e {NumeroCasuale}");
+            Console.WriteLine($"nome del prodotto{Prodottodettagliato.nome}");
+            Console.WriteLine($"descrizione della {Prodottodettagliato.nome} {Prodottodettagliato.description}");
+            Console.WriteLine($"il prezzo e di {Prodottodettagliato.prezzo}");
+            Console.WriteLine($"il prezzo con iva e di {Prodottodettagliato.PrezzoPIuIva()}");
+
+
+        }
+
+
 
     }
 }
-}
+
